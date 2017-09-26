@@ -14,9 +14,14 @@ node {
    stage('tag') {
 
      withCredentials([usernamePassword(credentialsId: 'f1468e48-705e-4eaf-8246-412a25597f4a', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-       sh 'echo "Foo"'
-       sh "git tag -a 1234 -m 'Jenkins'"
-       sh "git push https://${PASSWORD}@https://github.com/ksexton/docker-demo.git --tags"
+       pushUrl = "https://${PASSWORD}@github.com/ksexton/docker-demo.git"
+       sh """
+git config --local user.name 'jenkins-ci'
+git config --local user.email 'jenkins-ci@sightmachine.com'
+git tag -a 1234 -m 'Jenkins'
+git push ${pushUrl} --tags
+       """
+       // sh "git push https://${PASSWORD}@https://github.com/ksexton/docker-demo.git --tags"
        // sh("printenv")       
      }
    }
