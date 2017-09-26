@@ -15,9 +15,8 @@ node {
 
      withCredentials([usernamePassword(credentialsId: 'f1468e48-705e-4eaf-8246-412a25597f4a', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
        sh 'echo "Foo"'
-       sh("printenv")       
-       // sh("git tag -a some_tag -m 'Jenkins'")
-       // sh("git push https://${OATH_TOKEN}@<REPO> --tags")
+       sh "git tag -a 1234 -m 'Jenkins'"
+       sh "git push https://${PASSWORD}@https://github.com/ksexton/docker-demo.git --tags"
        // sh("printenv")       
      }
    }
