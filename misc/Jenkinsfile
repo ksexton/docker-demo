@@ -11,6 +11,13 @@ node {
        sh 'npm test'
      }
    }
+   stage('tag') {
+     withCredentials([usernamePassword(credentialsId: 'f1468e48-705e-4eaf-8246-412a25597f4a', passwordVariable: 'OATH_TOKEN']) {
+       sh("git tag -a some_tag -m 'Jenkins'")
+       // sh("git push https://${OATH_TOKEN}@<REPO> --tags")
+       sh("printenv")       
+     }
+   }
    stage('docker build/push') {
      docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
        def app = docker.build("kylesexton/docker-nodejs-demo:${commit_id}", '.').push()
