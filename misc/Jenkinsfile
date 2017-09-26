@@ -18,7 +18,7 @@ node {
        sh """
 git config --local user.name 'jenkins-ci'
 git config --local user.email 'jenkins-ci@sightmachine.com'
-git tag -a $(date +%s) -m 'Jenkins'
+git tag -a ${BUILD_NUMBER} -m 'Jenkins'
 git push ${pushUrl} --tags
        """
        // sh "git push https://${PASSWORD}@https://github.com/ksexton/docker-demo.git --tags"
