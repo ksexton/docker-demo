@@ -3,9 +3,13 @@ pipeline {
     label 'docker'
   }
   stages {
-    stage('Build setup') {
+    stage('Checkout') {
       steps {
         checkout scm
+      }
+    }
+    stage('Build') {
+      steps {
         script {
           myBuild = docker.build("ksexton/docker-demo:${env.BUILD_ID}")
         }
@@ -15,12 +19,17 @@ pipeline {
       steps {
         script {
           myBuild.inside("-v ${pwd()}:/build") {
-            sh 'ls'
-            sh 'hostname'
-            sh 'pwd'
-            sh 'id'
+            sh 'echo "Inside container running tests."'
           }
         }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo "Here we would deploy"
+        // docker.withRegistry('https://registry.example.com', 'credentials-id') {
+        //   myBuild.push()
+        // }
       }
     }
   }
