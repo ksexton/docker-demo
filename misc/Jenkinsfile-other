@@ -7,7 +7,7 @@ pipeline {
       steps {
         checkout scm
         script {
-          def myBuild = docker.build("ksexton/docker-demo:${env.BUILD_ID}")
+          myBuild = docker.build("ksexton/docker-demo:${env.BUILD_ID}")
         }
       }
     }
