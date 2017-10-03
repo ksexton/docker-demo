@@ -1,0 +1,27 @@
+pipeline {
+  agent {
+    label 'docker'
+  }
+  stages {
+    stage('Build setup') {
+      steps {
+        checkout scm
+        script {
+          def myBuild = docker.build("ksexton/docker-demo:${env.BUILD_ID}")
+        }
+      }
+    }
+    stage('Test') {
+      steps {
+        script {
+          myBuild.inside("-v ${pwd()}:/build") {
+            sh 'ls'
+            sh 'hostname'
+            sh 'pwd'
+            sh 'id'        
+          }
+        }
+      }
+    }
+  }
+}
