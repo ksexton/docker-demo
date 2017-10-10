@@ -1,3 +1,4 @@
+#!groovy
 pipeline {
   agent {
     label 'docker'
@@ -20,6 +21,19 @@ pipeline {
         script {
           myBuild.inside("-v ${pwd()}:/build") {
             sh 'echo "Inside container running tests."'
+          }
+        }
+      }
+    }
+    stage('Documentation') {
+      when {
+        branch 'master'
+      }
+      steps {
+        script {
+          myBuild.inside("-v ${pwd()}:/build") {
+            sh 'echo "Inside container building documentation"'
+            sh 'cd /build/tests; python -m pytest test_capitalize.py'
           }
         }
       }
