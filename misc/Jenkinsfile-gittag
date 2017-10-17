@@ -1,0 +1,32 @@
+#!groovy
+
+pipeline {
+  stages {
+    stage("checkout cookbook") {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage("tag release") {
+      steps {
+        withCredentials([usernamePassword(
+                          credentialsId: 'f1468e48-705e-4eaf-8246-412a25597f4a',
+                          passwordVariable: 'PASSWORD',
+                          usernameVariable: 'USERNAME')]) {
+          script {
+            pushUrl = "https://${PASSWORD}@github.com/ksexton/docker-demo.git"
+            sh '''
+              VERSION=$(rvm 2.3@smchef-rabbitmq do ruby jenkins/print_version.rb)
+              git config --local user.name 'Sighty'
+              git config --local user.emaipl 'ops@sightmachine.com'
+              echo ${pushUrl}
+              git tag v$VERSION
+              git push ${pushUrl} v$VERSION
+            '''
+          }
+        }
+      }
+    }
+  }
+}
