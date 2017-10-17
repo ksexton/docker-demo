@@ -20,7 +20,8 @@ pipeline {
           sh '''
               git config --local user.name 'Foo'
               git config --local user.email 'foo@bar.com'
-              echo ${WOOWOO}
+              echo ${WOOWOO} > lalala.txt
+              cat lalala.txt
               git tag v$(date +%s)
               git push https://${PASSWORD}@github.com/ksexton/docker-demo.git v$VERSION
             '''
