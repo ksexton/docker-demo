@@ -20,9 +20,9 @@ pipeline {
           script {
             pushUrl = "https://${PASSWORD}@github.com/ksexton/docker-demo.git"
             sh '''
-              VERSION=$(rvm 2.3@smchef-rabbitmq do ruby jenkins/print_version.rb)
-              git config --local user.name 'Sighty'
-              git config --local user.emaipl 'ops@sightmachine.com'
+              VERSION=1.7
+              git config --local user.name 'Foo'
+              git config --local user.email 'foo@bar.com'
               echo ${pushUrl}
               git tag v$VERSION
               git push ${pushUrl} v$VERSION
