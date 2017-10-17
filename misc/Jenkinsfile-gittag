@@ -15,12 +15,12 @@ pipeline {
       steps {
         withCredentials([usernamePassword(
                           credentialsId: 'f1468e48-705e-4eaf-8246-412a25597f4a',
-                          passwordVariable: 'PASSWORD',
+                          passwordVariable: 'WOOWOO',
                           usernameVariable: 'USERNAME')]) {
           sh '''
               git config --local user.name 'Foo'
               git config --local user.email 'foo@bar.com'
-              echo ${PASSWORD}
+              echo ${WOOWOO}
               git tag v$(date +%s)
               git push https://${PASSWORD}@github.com/ksexton/docker-demo.git v$VERSION
             '''
