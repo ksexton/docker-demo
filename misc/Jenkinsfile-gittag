@@ -18,11 +18,10 @@ pipeline {
                           passwordVariable: 'PASSWORD',
                           usernameVariable: 'USERNAME')]) {
           sh '''
-              VERSION=1.7
               git config --local user.name 'Foo'
               git config --local user.email 'foo@bar.com'
               echo ${pushUrl}
-              git tag v$VERSION
+              git tag v$(date +%s)
               git push https://${PASSWORD}@github.com/ksexton/docker-demo.git v$VERSION
             '''
         }
