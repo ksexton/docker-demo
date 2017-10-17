@@ -1,7 +1,9 @@
 #!groovy
 
 pipeline {
-  agent {}
+  agent {
+    label 'docker'
+  }
   stages {
     stage("checkout cookbook") {
       steps {
